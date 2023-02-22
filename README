@@ -1,0 +1,19 @@
+Raffie's Color Based Feature Detector (WIP)
+
+Python 3.10
+Requires OpenCV and Numpy
+-Nick, if you've used Tim's SMA then you shouldn't need to pip anything else.
+
+Instructions:
+1. You can run it in IDLE if you don't have a preferred IDE.
+2. Change the filepath in line 14 to wherever your desired photograph is located.
+3. Lines 17-18 define the color threshold. 
+	-Each array of three numbers represents hue, saturation, and value in that order.
+	-If you wish to detect other colors:
+		-OpenCV takes H values between 0-179 and S,V values between 0-255
+		-Use HSVgradient.png to find the proper hues. You can have a very wide range
+		depending on the stain.
+		-S represents color purity while V represents color lightness. These likely
+		won't need to be adjusted unless you are detecting black or white.
+4. Run it. Collagen percentages will display in the console.
+5. If you wish to save one of the images, use cv.imwrite('filename.extension', variable)
