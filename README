@@ -1,19 +1,28 @@
-Raffie's Color Based Feature Detector (WIP)
+Raffie's Color Based Feature Detector (Updated 2/25/23)
 
 Python 3.10
-Requires OpenCV and Numpy
--Nick, if you've used Tim's SMA then you shouldn't need to pip anything else.
+OpenCV 4.6.0
+Numpy 1.23.1
 
-Instructions:
-1. You can run it in IDLE if you don't have a preferred IDE.
-2. Change the filepath in line 14 to wherever your desired photograph is located.
-3. Lines 17-18 define the color threshold. 
-	-Each array of three numbers represents hue, saturation, and value in that order.
-	-If you wish to detect other colors:
-		-OpenCV takes H values between 0-179 and S,V values between 0-255
-		-Use HSVgradient.png to find the proper hues. You can have a very wide range
-		depending on the stain.
-		-S represents color purity while V represents color lightness. These likely
-		won't need to be adjusted unless you are detecting black or white.
-4. Run it. Collagen percentages will display in the console.
-5. If you wish to save one of the images, use cv.imwrite('filename.extension', variable)
+main.py can detect any HSV color for a single image. It can be easily adapted for other stains.
+collagen.py detects colors for an entire folder.
+This readme was written for NICK, who is only interested in collagen.py.
+
+Instructions for Running in IDLE (assuming you know nothing):
+1. Install Standard Python Distro (Comes with IDLE and Pip)
+2. Pip install OpenCV & Numpy. Can be done globally or in venv
+    if you prefer a different IDE.
+3. On Github, click on collagen.py, then "Raw", then right click
+    and "Save as" to your hard drive.
+4. Create a folder somewhere to hold your photos.
+5. Run IDLE. Click on "File" -> "Open" -> navigate to
+    collagen.py and open it.
+6. Edit the path in line 13 to the location of your folder. Save.
+7. Run the program. It will spit out percentages in the console.
+8. It will then ask if you would like to see the results.
+    Input 'y' and it will overlay the collagen lines onto the images.
+    Click any key to page through each photograph. See if you agree with
+    the results.
+
+It does everything you asked for. The only things I can think of would be saving the images for use
+as figures, or spitting out percentages as .csv for import to Excel. Let me know if that's helpful.
