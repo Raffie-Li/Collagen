@@ -19,32 +19,26 @@ for filename in sorted(os.listdir(path)):
         filenames.append(filename)
 
 masks = []
-hsv_color1 = np.asarray([115, 50, 20])
-hsv_color2 = np.asarray([170, 255, 255])
+whitespace = []
+hsv_color1 = np.asarray([0, 0, 170])
+hsv_color2 = np.asarray([180, 45, 255])
 for img in hsv_images:
     mask = cv.inRange(img, hsv_color1, hsv_color2)
     masks.append(mask)
+for mask in masks:
+    whitespace.append(cv.countNonZero(mask))
 
 # total pixels in the first image (assume all images are same resolution, 2048x1536)
 x = hsv_images[0].shape[1]
 y = hsv_images[0].shape[0]
 total_pix = x*y
 
-# number of collagen pixels
-collagen = []
-for mask in masks:
-    collagen.append(cv.countNonZero(mask))
-
-# amount of whitespace
-hsv_color3 = np.asarray([0, 0, 170])
-hsv_color4 = np.asarray([180, 45, 255])
-whitespace = []
-for img in hsv_images:
-    whitespace.append(cv.countNonZero(cv.inRange(img, hsv_color3, hsv_color4)))
-
-percent_collagen = [100*(i/(total_pix-j)) for i, j in zip(collagen, whitespace)]
-for name, percentage in zip(sorted(os.listdir(path)), percent_collagen):
-    print('Filename:', name, '\n', 'Percent Collagen:', percentage, '\n')
+percentages = []
+for i in whitespace:
+    percentage = 100*(i/total_pix)
+    percentages.append(percentage)
+for name, percentage in zip(sorted(os.listdir(path)), percentages):
+    print('Filename:', name, '\n', 'Percent Whitespace:', percentage, '\n')
 
 results = []
 for img, mask, filename in zip(hsv_images, masks, sorted(os.listdir(path))):
@@ -65,7 +59,7 @@ save = input('Shall I save the results? (y/n): ')
 if save == 'y':
     save_paths = []
     new_dir = path + '/Results'
-    np.savetxt(path + '/Results.csv', np.column_stack((filenames, collagen, whitespace, percent_collagen)),
+    np.savetxt(path + '/Results.csv', np.column_stack((filenames, whitespace, percentages)),
                delimiter=',', fmt='%s', header='Filename')
     if not os.path.exists(new_dir):
         os.makedirs(new_dir)
