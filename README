@@ -1,4 +1,4 @@
-Raffie's Color Based Feature Detector (Updated 2/25/23)
+Raffie's Color Based Feature Detector (Updated 3/11/23)
 
 Python 3.10
 OpenCV 4.6.0
@@ -23,6 +23,3 @@ Instructions for Running in IDLE (assuming you know nothing):
     Input 'y' and it will overlay the collagen lines onto the images.
     Click any key to page through each photograph. See if you agree with
     the results.
-
-It does everything you asked for. The only things I can think of would be saving the images for use
-as figures, or spitting out percentages as .csv for import to Excel. Let me know if that's helpful.
