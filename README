@@ -1,12 +1,15 @@
-Raffie's Color Based Feature Detector (Updated 3/11/23)
+Raffie's Feature Detectors (Updated 5/08/23)
+Various Simple Scripts for Image Quantification
+Part of my undergrad work at UC Santa Barbara. See https://labs.mcdb.ucsb.edu/weimbs/thomas/ for more.
 
 Python 3.10
 OpenCV 4.6.0
 Numpy 1.23.1
 
-main.py can detect any HSV color for a single image. It can be easily adapted for other stains.
-collagen.py detects colors for an entire folder.
-This readme was written for NICK, who is only interested in collagen.py.
+main.py - General use HSV color detector, single image
+whitespace.py - White pixel detector
+collagen.py - Detection of collagen in Sirius Red/Fast Green tissue stains
+sma.py - Smooth muscle actin detector, for use with IFs
 
 Instructions for Running in IDLE (assuming you know nothing):
 1. Install Standard Python Distro (Comes with IDLE and Pip)
