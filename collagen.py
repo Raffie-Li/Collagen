@@ -11,7 +11,7 @@ def rescaleFrame(frame, scale=0.50):
 
 hsv_images = []
 filenames = []
-path = 'C:/Users/Raffie/Desktop/Collagen'
+path = 'C:/Users/tit/Desktop/Collagen'
 for filename in sorted(os.listdir(path)):
     img = cv.imread(os.path.join(path,filename))
     if img is not None:
@@ -49,7 +49,8 @@ for name, percentage in zip(sorted(os.listdir(path)), percent_collagen):
 results = []
 for img, mask, filename in zip(hsv_images, masks, sorted(os.listdir(path))):
     blend = cv.addWeighted(cv.cvtColor(img, cv.COLOR_HSV2BGR),
-            0.6, cv.cvtColor(mask, cv.COLOR_GRAY2BGR), 0.4, 0.0)
+            0.95, cv.cvtColor(mask, cv.COLOR_GRAY2BGR), 0.05, 0.0)
+    blend[mask>0]=(255,255,255)
     results.append(blend)
 view = input('Would you like to see the results? (y/n): ')
 if view == 'y':
