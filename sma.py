@@ -1,13 +1,12 @@
 import cv2 as cv
 import numpy as np
 import os
-
-path = 'C:/Users/tit/Desktop/SMA/L43.1 10x/Pos0' # Change this!!!
+path = 'C:/Users/tit/Desktop/SMA/L45.4 10x/Pos0'  # Change this to location of your images!
 
 def rescaleFrame(frame, scale=0.75):
     width = int(frame.shape[1]*scale)
     height = int(frame.shape[0]*scale)
-    dimensions = (width,height)
+    dimensions = (width, height)
     return cv.resize(frame, dimensions, interpolation=cv.INTER_AREA)
 
 def getImages():
@@ -16,17 +15,16 @@ def getImages():
     for filename in sorted(os.listdir(path)):
         img = cv.imread(os.path.join(path,filename))
         if img is not None:
-            copy = img[:,:,2]
+            copy = img[:, :, 2]
             copy8bit = cv.normalize(copy, None, 0, 255, cv.NORM_MINMAX, dtype=cv.CV_8U)
             images.append(copy8bit)
             filenames.append(filename)
     return images, filenames
-
 def processImages(images, filenames):
-    displayImages = False # Change this to True if you want to see the raw images!!
-    sma_pixels,tubule_pixels = [],[]
-    signals,tubules = [],[]
-    for image,filename in zip(images,filenames):
+    displayImages = False  # Change this to True if you want to see the raw images!!
+    sma_pixels, tubule_pixels = [], []
+    signals, tubules = [], []
+    for image, filename in zip(images, filenames):
         signal = cv.inRange(image, 50, 75)
         sma = cv.countNonZero(signal)
         sma_pixels.append(sma)
@@ -48,7 +46,7 @@ def processImages(images, filenames):
 def calcAvgs(sma_pix, tubule_pix):
     # Percent Formula: SMA pixels / Tubule Pixels
     percentages = []
-    for sma, tubule in zip(sma_pix,tubule_pix):
+    for sma, tubule in zip(sma_pix, tubule_pix):
         percent = 100*(sma/tubule)
         percentages.append(percent)
     return percentages
@@ -59,10 +57,10 @@ def generateFigs(signals, tubules, filenames):
     for r, g, filename in zip(signals,tubules,filenames):
         empty_channel = np.zeros((1040,1392,1),dtype=np.uint8)
         figure = cv.merge((empty_channel, g, r))
-        figure[r>0]=(0,0,255)
+        figure[r > 0] = (0, 0, 255)
         if displayFigures == True:
             cv.imshow(filename, rescaleFrame(figure))
-            cv.waitKey(0); cv.destroyAllWindows(), cv.waitKey(1)
+            cv.waitKey(0), cv.destroyAllWindows(), cv.waitKey(1)
         figures.append(figure)
     return figures
 
@@ -80,20 +78,14 @@ def saveData(sma_pix, tubule_pix, percentages, figures, filenames):
     return()
 
 def main():
-    images,filenames = getImages()
+    images, filenames = getImages()
     sma_pix, tubule_pix, signals, tubules = processImages(images,filenames)
     percentages = calcAvgs(sma_pix, tubule_pix)
     for name,percentage in zip(filenames,percentages):
-        print('Filename: ',name,'\n','Percent SMA: ',percentage,'\n')
-    figures = generateFigs(signals,tubules,filenames)
+        print('Filename: ', name, '\n', 'Percent SMA: ', percentage, '\n')
+    figures = generateFigs(signals, tubules, filenames)
     save = input('Save results? (y/n): ')
     if save == 'y':
         saveData(sma_pix, tubule_pix, percentages, figures, filenames)
 
 main()
-
-
-
-# Signal = Red
-# Background = Green
-# Distinguish between SMA and kidney tubule
