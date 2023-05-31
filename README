@@ -1,4 +1,4 @@
-Raffie's Feature Detectors (Updated 5/08/23)
+Raffie's Feature Detectors (Updated 5/31/23)
 Various Simple Scripts for Image Quantification
 Part of my undergrad work at UC Santa Barbara. See https://labs.mcdb.ucsb.edu/weimbs/thomas/ for more.
 
@@ -7,20 +7,23 @@ OpenCV 4.6.0
 Numpy 1.23.1
 
 main.py - General use HSV color detector, single image
-whitespace.py - White pixel detector
-collagen.py - Detection of collagen in Sirius Red/Fast Green tissue stains
-sma.py - Smooth muscle actin detector, for use with IFs
+whitespace.py - White pixel detector, multi image
+whitespace2.py - Detects whitespace within the largest contour, single image
+collagen.py - Detection of collagen in Sirius Red/Fast Green tissue stains, multi image
+sma.py - Smooth muscle actin detector, for use with IFs, multi image
 
-Instructions for Running in IDLE (assuming you know nothing):
-1. Install Standard Python Distro (Comes with IDLE and Pip)
-2. Pip install OpenCV & Numpy. Can be done globally or in venv
-    if you prefer a different IDE.
-3. On Github, click on collagen.py, then "Raw", then right click
-    and "Save as" to your hard drive.
+Instructions:
+1. Install Standard Python Distro. This comes with pip, a package installer
+    for Python, and IDLE, a general-use IDE for running the code.
+2. Pip install OpenCV & Numpy. Google how to do this. 
+    Can be done globally or in venv if you want to use a different IDE.
+3. On Github, download the file you want to use. 
 4. Create a folder somewhere to hold your photos.
 5. Run IDLE. Click on "File" -> "Open" -> navigate to
-    collagen.py and open it.
-6. Edit the path in line 13 to the location of your folder. Save.
+    code file and open it.
+6. Edit the path variable in the code to the location of your folder. Save.
+    If the detector is single image, the path must contain the name of the image itself.
+    ex: C:/Users/user/desktop/folder/image_name.jpg
 7. Run the program. It will spit out percentages in the console.
 8. It will then ask if you would like to see the results.
     Input 'y' and it will overlay the collagen lines onto the images.
