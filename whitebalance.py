@@ -8,7 +8,7 @@ def rescaleFrame(frame, scale=0.50):
     dimensions = (width,height)
     return cv.resize(frame, dimensions, interpolation=cv.INTER_AREA)
 
-img = cv.imread('D:/Collagen/TRF/HA56.5/10x0001.tif', cv.IMREAD_COLOR)
+img = cv.imread('D:/Collagen/TRF/HA57.2/10x0006.tif', cv.IMREAD_COLOR)
 hsv_img = cv.cvtColor(img, cv.COLOR_BGR2HSV)
 
 hsv_color1 = np.asarray([0, 0, 235])
