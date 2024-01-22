@@ -29,7 +29,9 @@ for img in images:
 
 # this block of code finds the brightest pixels in the image. we will average these pixels to generate
 # ratios with which we can color correct the entire image.
-white_pixel_lower_threshold = np.asarray([0,0,250])
+# IMPORTANT: If your image set tends to be darker, not enough bright pixels will be detected for the average.
+# You will get a NaN error. To fix this, lower the minimum brightness threshold (the third number in the line below)
+white_pixel_lower_threshold = np.asarray([0,0,225])
 white_pixel_upper_threshold = np.asarray([180,100,255])
 brightest_pixel_masks, brightest_pixel_coordinates = [], []
 for hsv_img in hsv_images:
@@ -57,7 +59,7 @@ for array in hsv_vectors:
 # back to BGR.
 bgr_correction_vectors = []
 for vector in hsv_color_correction_vectors:
-    h,s,v = vector[0]/180, vector[1]/255, vector[2]/255
+    h,s,v = vector[0]/179, vector[1]/255, vector[2]/255
     rgb_fractional = colorsys.hsv_to_rgb(h,s,v)
     b,g,r = rgb_fractional[2]*255, rgb_fractional[1]*255, rgb_fractional[0]*255
     bgr_correction_vectors.append([b,g,r])
@@ -71,7 +73,7 @@ for img,vector in zip(images,bgr_correction_vectors):
     blank_image[:,:,2] = vector[2]
     white_sample_images.append(blank_image)
 
-# Now we calculate ratios by divind max value 255 by our vectors to see what channels need to be increased/decreased.
+# Now we calculate ratios by dividing max value 255 by our vectors to see what channels need to be increased/decreased.
 bgr_ratios = []
 for vector in bgr_correction_vectors:
     blue_ratio = 255/vector[0]
@@ -106,7 +108,7 @@ else:
 color_corrected_hsv, masks = [], []
 for img in color_corrected_imgs:
     color_corrected_hsv.append(cv.cvtColor(img, cv.COLOR_BGR2HSV))
-collagen_lower_threshold = np.asarray([130, 50, 20])
+collagen_lower_threshold = np.asarray([115, 50, 20])
 collagen_upper_threshold = np.asarray([180, 255, 255])
 for img in color_corrected_hsv:
     mask = cv.inRange(img, collagen_lower_threshold, collagen_upper_threshold)
@@ -155,10 +157,10 @@ save = input('Save results? (y/n): ')
 if save == 'y':
     save_paths = []
     new_dir = path + '/Results'
-    np.savetxt(path + '/Results.csv', np.column_stack((filenames, collagen, whitespace, percent_collagen)),
-               delimiter=',', fmt='%s', header='Filename')
     if not os.path.exists(new_dir):
         os.makedirs(new_dir)
+    np.savetxt(new_dir + '/Results.csv', np.column_stack((filenames, collagen, whitespace, percent_collagen)),
+               delimiter=',', fmt='%s', header='Filename')
     for filename in filenames:
         save_paths.append(new_dir + '/' + filename)
     for save_path, result in zip(save_paths, results):
