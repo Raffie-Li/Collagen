@@ -15,17 +15,17 @@ def getImages():
     for filename in sorted(os.listdir(path)):
         img = cv.imread(os.path.join(path,filename))
         if img is not None:
-            copy = img[:, :, 2]
+            copy = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
             copy8bit = cv.normalize(copy, None, 0, 255, cv.NORM_MINMAX, dtype=cv.CV_8U)
             images.append(copy8bit)
             filenames.append(filename)
     return images, filenames
 def processImages(images, filenames):
-    displayImages = False  # Change this to True if you want to see the raw images!!
+    displayImages = True  # Change this to True if you want to see the raw images!!
     sma_pixels, tubule_pixels = [], []
     signals, tubules = [], []
     for image, filename in zip(images, filenames):
-        signal = cv.inRange(image, 50, 75)
+        signal = cv.inRange(image, 70, 190)
         sma = cv.countNonZero(signal)
         sma_pixels.append(sma)
         signals.append(signal)
@@ -36,10 +36,15 @@ def processImages(images, filenames):
         tubules.append(validKidney)
 
         if displayImages == True:
-            cv.imshow(filename, rescaleFrame(image))
-            cv.imshow('SMA', rescaleFrame(signal))
-            cv.imshow('Tubules', rescaleFrame(validKidney))
+            cv.imshow(filename + ' Normalized', rescaleFrame(image))
+            # cv.imshow('SMA', rescaleFrame(signal))
+            # cv.imshow('Tubules', rescaleFrame(validKidney))
             cv.waitKey(0); cv.destroyAllWindows(); cv.waitKey(1)
+    proceed = input('OK to Proceed (y/n): ')
+    if proceed == 'y':
+        pass
+    else:
+        exit()
 
     return sma_pixels, tubule_pixels, signals, tubules
 
