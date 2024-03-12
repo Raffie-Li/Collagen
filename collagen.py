@@ -11,7 +11,7 @@ def rescaleFrame(frame, scale=0.50):
 
 hsv_images = []
 filenames = []
-path = 'C:/Users/tit/Desktop/Collagen'
+path = 'C:/Users/Raffie/Desktop/Collagen'
 for filename in sorted(os.listdir(path)):
     img = cv.imread(os.path.join(path,filename))
     if img is not None:
@@ -70,7 +70,7 @@ if save == 'y':
                delimiter=',', fmt='%s', header='Filename')
     if not os.path.exists(new_dir):
         os.makedirs(new_dir)
-    for filename in sorted(os.listdir(path)):
+    for filename in filenames:
         save_paths.append(new_dir + '/' + filename)
     for save_path, result in zip(save_paths, results):
         cv.imwrite(save_path, result)
