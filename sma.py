@@ -20,6 +20,7 @@ def getImages():
             images.append(copy8bit)
             filenames.append(filename)
     return images, filenames
+    
 def processImages(images, filenames):
     displayImages = True  # Change this to True if you want to see the raw images!!
     sma_pixels, tubule_pixels = [], []
@@ -40,6 +41,7 @@ def processImages(images, filenames):
             # cv.imshow('SMA', rescaleFrame(signal))
             # cv.imshow('Tubules', rescaleFrame(validKidney))
             cv.waitKey(0); cv.destroyAllWindows(); cv.waitKey(1)
+            
     proceed = input('OK to Proceed (y/n): ')
     if proceed == 'y':
         pass
