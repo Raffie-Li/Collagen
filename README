@@ -1,28 +1,39 @@
-Computer Vision Scripts for Automated Histological Quantification (Updated 1/12/24)
+Computer Vision Scripts for Automated Histological Quantification (Updated 5/31/24)
 Developed for Thomas Weimbs Lab at UC Santa Barbara. See https://labs.mcdb.ucsb.edu/weimbs/thomas/ for more.
 
 >= Python 3.10
 >= OpenCV 4.6.0
 >= Numpy 1.23.1
 
+collagen_final.py - Automatic white balance collagen quantifier. Use this one. Contains small revisions from AWB_collagen.
+sma.py - Smooth muscle actin detector, for use with IFs.
+
 cystic_volume.py - Counts white pixels within the largest contour in a single image
-collagen.py - Detection of collagen in Sirius Red/Fast Green tissue stains. Multi image
+collagen.py - Detection of collagen in Chondrex Sirius Red/Fast Green tissue stains.
 AWB_collagen.py - Auto white balance collagen. A more robust collagen detector which applies the white balance algorithm
                   from whitebalance.py. Important because white (cystic) pixels are not counted in the %area calculation,
                   so they must be accurately excluded so as not to throw off our results.
-sma.py - Smooth muscle actin detector, for use with IFs. Multi image
-whitebalance.py - samples the brightest pixels of an image and averages them to calculate a white balance correction
-                  ratio for each color channel. Applies these ratios to obtain a neutral white balance image.
+bile_ducts.py - A simple script I was experimenting with for automated outlining of stained bile ducts with PLD. 
+whitebalance.py - A straightforward implementation of the white balance algorithm used in collagen_final and AWB_collagen.
+                  Samples the brightest pixels of an image and averages them to calculate a white balance correction ratio
+                  for each color channel. Applies these ratios to obtain a neutral white balance image.
 
-If you have never used Python before:
-1. Install Standard Python Distro. This comes with pip, a package installer
+Thus far, only sma.py and collagen_final.py have been used to do any scientific quantification in the Weimbs lab. The other
+scripts are for my own personal experimentation.
+
+Instructions for running collagen_final or sma:
+1. Install the latest version of Python. This comes with pip, a simple package installer
     for Python, and IDLE, a general-use IDE for running the code --> https://www.python.org/downloads/
-2. Pip install OpenCV. There are many guides on the internet on how to do this.
-   For a global install:
+2. Install OpenCV for Python. I believe it requires Python 3.7 or above.
    ON WINDOWS:
       1. Launch Command Prompt
-      2. Type "python -m pip install -U opencv-python"
-      3. It should automatically install OpenCV and Numpy, which OpenCV is built on.
+      2. Copy the following command: "python -m pip install -U opencv-python"
+      3. You should see pip automatically download and install OpenCV and NumPy.
+  ON MacOS:
+      1. Launch Terminal
+      2. Copy the following command: "pip3 install opencv-python"
+      3. You should see pip automatically download and install OpenCV and NumPY
+  If you are still confused on this step, there are numerous guides across the internet.
 3. On Github, download the file you want to use. 
 4. Create a folder somewhere to hold your photos.
 5. Run IDLE. Click on "File" -> "Open" -> navigate to
